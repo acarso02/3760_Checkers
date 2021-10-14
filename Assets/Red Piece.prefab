@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Red Piece
       objectReference: {fileID: 0}
+    - target: {fileID: 5149050401064462414, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8188535457242813912, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
       propertyPath: m_RootOrder
       value: 0
