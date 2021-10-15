@@ -649,8 +649,6 @@ GameObject:
   - component: {fileID: 580880123}
   - component: {fileID: 580880122}
   - component: {fileID: 580880124}
-  - component: {fileID: 580880125}
-  - component: {fileID: 580880126}
   m_Layer: 5
   m_Name: Popup
   m_TagString: Untagged
@@ -730,30 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc2b48c3b66fb6489ecb7065b4fb87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &580880125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 580880120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc2b48c3b66fb6489ecb7065b4fb87b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &580880126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 580880120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc2b48c3b66fb6489ecb7065b4fb87b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  quitGameDelayInSeconds: 1
 --- !u!1 &998875917
 GameObject:
   m_ObjectHideFlags: 0
@@ -2064,6 +2039,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1165427074}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1855030218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2114,6 +2101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc2b48c3b66fb6489ecb7065b4fb87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quitGameDelayInSeconds: 0
 --- !u!1 &2017847705
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,6 +2197,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 1165427074}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2017847708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2405,3 +2405,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc18d6fd7e3b4de4b91c6eaa03ed5757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGameDelayInSeconds: 1
