@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5149050401064462414, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
+      propertyPath: m_TagString
+      value: Red Piece
+      objectReference: {fileID: 0}
     - target: {fileID: 8188535457242813912, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -58,6 +62,10 @@ PrefabInstance:
     - target: {fileID: 8188535457242813912, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8677539561020211930, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
+      propertyPath: m_TagString
+      value: Red Piece
       objectReference: {fileID: 0}
     - target: {fileID: 9035069579378458614, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
       propertyPath: m_Materials.Array.data[0]
