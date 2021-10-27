@@ -31,16 +31,15 @@ public class PlayerControls : MonoBehaviour
             
             //If it hits, check the tag on the GameObject it hit,
             if (Physics.Raycast(ray.origin, ray.direction, out hit)) {
-                //If that tag is the same as the one belonging to the pieces that this player controls, start waiting for their next click
-
+                //If that tag is the same as the one belonging to the pieces that this player controls, start waiting for the next click
                 if (hit.collider.CompareTag(relevantTag)) {
-                    StartCoroutine(WaitForNextClick(hit.collider.transform.root.gameObject));
+                    StartCoroutine(WaitForBoardClick(hit.collider.transform.root.gameObject));
                 }
             }
         }
     }
 
-    IEnumerator WaitForNextClick(GameObject piece) {
+    IEnumerator WaitForBoardClick(GameObject piece) {
         yield return null; //In a coroutine yield return null means "wait for one frame"
         while(!Input.GetMouseButtonDown(0)) {
             yield return null;
@@ -51,8 +50,17 @@ public class PlayerControls : MonoBehaviour
         
         if (Physics.Raycast(ray.origin, ray.direction, out hit)) {
             if (hit.collider.CompareTag("Black Square")) {
-                //Eventually, this should call Board.MovePiece()
-                if (true) {
+                GameObject square = hit.collider.gameObject;
+
+                int atRow, atCol, toRow, toCol;
+                atCol = (int) (piece.transform.position.x + 0.5f);
+                atRow = (int) piece.transform.position.z;
+                toCol = (int) (square.transform.position.x + 0.5f);
+                toRow = (int) square.transform.parent.position.z;
+                bool canMove = Board.MovePiece(atRow, atCol, toRow, toCol);
+                Debug.Log("atRow: " + atRow + " atCol: " + atCol + " toRow: " + toRow + " toCol: " + toCol);
+                Debug.Log(canMove);
+                if (canMove) {
                     //Move the model to the new location
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
                 }
