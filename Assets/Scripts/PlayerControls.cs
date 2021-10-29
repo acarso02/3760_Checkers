@@ -26,17 +26,26 @@ public class PlayerControls : MonoBehaviour
     {
         //If the mouse is clicked, cast a ray from the camera, in the direction of the mouse pointer
         if (Input.GetMouseButtonDown(0)) {
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            
-            //If it hits something, check the tag on the GameObject it hit,
-            if (Physics.Raycast(ray.origin, ray.direction, out hit)) {
-                //If that tag is the same as the one belonging to the pieces that this player controls, start waiting for the next click
-                if (hit.collider.CompareTag(relevantTag)) {
-                    StartCoroutine(WaitForBoardClick(hit.collider.transform.root.gameObject));
-                }
+            GameObject piece = GetClickedOnPiece();
+            if (piece != null) {
+                StartCoroutine(WaitForBoardClick(piece));
             }
         }
+    }
+
+    private GameObject GetClickedOnPiece() {
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        
+        //If it hits something, check the tag on the GameObject it hit,
+        if (Physics.Raycast(ray.origin, ray.direction, out hit)) {
+            //If that tag is the same as the one belonging to the pieces that this player controls, start waiting for the next click
+            if (hit.collider.CompareTag(relevantTag)) {
+                return hit.collider.transform.root.gameObject;
+            }
+        }
+
+        return null;
     }
 
     IEnumerator WaitForBoardClick(GameObject piece) {
@@ -54,14 +63,17 @@ public class PlayerControls : MonoBehaviour
 
                 //Convert the piece and squares coordinates in world space to coordinates on the board (This should eventually be done by a function in Board)
                 int atRow, atCol, toRow, toCol;
-                atCol = (int) (piece.transform.position.x + 0.5f);
-                atRow = (int) piece.transform.position.z;
+
+                PieceInstantiator pI = piece.GetComponent<PieceInstantiator>();
+                Piece mP = pI.MyPiece;
+
+                atCol = mP.col;
+                atRow = mP.row;
+                //(eventually there should be a cleaner way to get the Board coordinates from the squares, but this is fine for now)
                 toCol = (int) (square.transform.position.x + 0.5f);
                 toRow = (int) square.transform.parent.position.z;
-                //attempt to move the piece to the new position
+                //attempt to move the piece to the new position, in the Board representation
                 bool canMove = Board.MovePiece(atRow, atCol, toRow, toCol);
-                Debug.Log("atRow: " + atRow + " atCol: " + atCol + " toRow: " + toRow + " toCol: " + toCol);
-                Debug.Log(canMove);
                 //if the attempt was successful, move the model to the squares position, but move it up by the positional difference between pieces and squares
                 if (canMove) {
                     //Move the model to the new location

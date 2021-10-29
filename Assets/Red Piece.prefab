@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8257697323765496979, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
+      propertyPath: isRed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5149050401064462414, guid: d43bb78c58cb3574ea75695660a8ef52, type: 3}
       propertyPath: m_Name
       value: Red Piece

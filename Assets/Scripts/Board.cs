@@ -1,46 +1,53 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 /*
 This class models an 8x8 checkers gameboard
+
+Idea: Refactor Piece[,] into a list of new objects representing pieces. on Start(), each piece gameobject sends a reference of itself to this class.
+This will make it easier to get pieces locations and will solve the on load bug where the boardModel state doesn't reset on scene load.
 */
+
+public enum Colour {
+    red,
+    black
+}
+
+public class Piece {    
+    public int row;
+    public int col;
+    public Colour myColour;
+
+    public Piece(int r, int c, Colour mC) {
+        row = r;
+        col = c;
+        myColour = mC;
+    }
+}
+
 public static class Board {
-    private enum Piece {
-        none,
-        red,
-        black
+    private static List<Piece> boardModel = new List<Piece>();
+
+    //Called when GameBoard is loaded in, by every piece GameObject
+    public static Piece AddPiece(int r, int c, Colour mC) {
+        Piece newPiece = new Piece(r, c, mC);
+        boardModel.Add(newPiece);
+
+        return newPiece;
     }
 
-    private static Piece[,] boardModel = new Piece[8,8]
-        {
-            {Piece.none, Piece.red,   Piece.none, Piece.red,   Piece.none, Piece.red,   Piece.none, Piece.red},
-            {Piece.red,   Piece.none, Piece.red,   Piece.none, Piece.red,   Piece.none, Piece.red,   Piece.none},
-            {Piece.none, Piece.red,   Piece.none, Piece.red,   Piece.none, Piece.red,   Piece.none, Piece.red},
-            
-            {Piece.none, Piece.none, Piece.none, Piece.none, Piece.none, Piece.none, Piece.none, Piece.none},
-            {Piece.none, Piece.none, Piece.none, Piece.none, Piece.none, Piece.none, Piece.none, Piece.none},
-
-            {Piece.black, Piece.none, Piece.black, Piece.none, Piece.black, Piece.none, Piece.black, Piece.none},
-            {Piece.none, Piece.black, Piece.none, Piece.black, Piece.none, Piece.black, Piece.none, Piece.black},
-            {Piece.black, Piece.none, Piece.black, Piece.none, Piece.black, Piece.none, Piece.black, Piece.none},
-        };
-
-    public static string BoardToString() {
-        string bMS = "BoardModel : \n\t1\t2\t3\t4\t5\t6\t7\t8\n";
-
-        for (int row = 0; row < 8; row++) {
-            bMS += (row+1) + "\t";
-            for (int col = 0; col < 8; col++) {
-                bMS += boardModel[row, col] + "\t";
-            }
-            bMS += "\n";
-        }
-
-        return bMS;
+    public static void RemovePiece(int r, int c) {
+        Piece toRemove = boardModel.Find(p => p.row == r && p.col == c);
+        boardModel.Remove(toRemove);
     }
 
-    public static string GetPieceAt(int row, int col) {
-        if (row < 8 && col < 8)
-            return "" + boardModel[row,col];
-        else
-            return null;
+    public static Piece GetPiece(int r, int c) {
+        return boardModel.Find(p => p.row == r && p.col == c);
+    }
+
+    //Deletes every Piece in boardModel
+    public static void ClearBoard() {
+        boardModel.Clear();
     }
 
     /*
@@ -48,9 +55,17 @@ public static class Board {
     Returns:    True if the piece was able to legally move, otherwise False
     */
     public static bool MovePiece(int atRow, int atCol, int toRow, int toCol) {
-        if ((boardModel[atRow, atCol] != Piece.none) && (boardModel[toRow, toCol] == Piece.none)) {
-            boardModel[toRow, toCol] = boardModel[atRow, atCol];
-            boardModel[atRow, atCol] = Piece.none;
+        //When code merge goes down, this should be swapped for an "IsLegal() function"
+        bool moveIsLegal = (boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol))
+                        && (!boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
+
+        // Debug.Log("piece to move exists? " + boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol));
+        // Debug.Log("space to move to is empty? " + !boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
+
+        if (moveIsLegal) {
+            Piece toMove = GetPiece(atRow, atCol);
+            toMove.row = toRow;
+            toMove.col = toCol;
             return true;
         }
         return false;
