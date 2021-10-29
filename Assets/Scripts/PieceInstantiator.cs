@@ -14,7 +14,10 @@ public class PieceInstantiator : MonoBehaviour
     }
 
     private Colour myColour;
-    public Colour MyColour { get; }
+    public Colour MyColour
+    { 
+        get { return myColour; }
+    }
 
     void Start() {
         int atRow, atCol;
