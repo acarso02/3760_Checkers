@@ -59,15 +59,34 @@ public static class Board {
         bool moveIsLegal = (boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol))
                         && (!boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
 
+
+
         // Debug.Log("piece to move exists? " + boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol));
         // Debug.Log("space to move to is empty? " + !boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
 
-        if (moveIsLegal) {
+        if (isLegal(atRow,atCol,toRow,toCol)) {
             Piece toMove = GetPiece(atRow, atCol);
             toMove.row = toRow;
             toMove.col = toCol;
             return true;
         }
         return false;
+    }
+
+    /*
+    Desc:       Checks to see if the given coordinates for a piece to move to is legal or not
+    Returns:    True if the piece is legally able to move to the requested square, false if not
+    */
+    public static bool isLegal(int atRow, int atCol, int toRow, int toCol) {
+        // Checks if the requested tile to move to is out of bounds of the board array
+        if((atRow > 7 || atRow < 0) || (atCol > 7 || atCol < 0)) {
+            return false;
+        } 
+        // Checks if there exist a piece to move at the given column and row and if there already exists a piece at the requested row and column to move to
+        else if((boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)&& (!boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol)))) {
+            return false;
+        }
+
+        return true;
     }
 }
