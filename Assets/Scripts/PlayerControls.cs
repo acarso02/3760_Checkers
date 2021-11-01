@@ -9,6 +9,8 @@ public class PlayerControls : MonoBehaviour
 
     private Camera cam;
     private string relevantTag;
+
+    public bool redTurn = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +80,11 @@ public class PlayerControls : MonoBehaviour
                 if (canMove) {
                     //Move the model to the new location
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
+
+                    // Add Camera switch function call here upon successful completion of move
+                    /*if(redTurn == true) {
+
+                    }*/
                 }
             }
         }
