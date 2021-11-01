@@ -55,16 +55,14 @@ public static class Board {
     Returns:    True if the piece was able to legally move, otherwise False
     */
     public static bool MovePiece(int atRow, int atCol, int toRow, int toCol) {
-        //When code merge goes down, this should be swapped for an "IsLegal() function"
-        bool moveIsLegal = (boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol))
-                        && (!boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
 
-
+        // Verify move is legal
+        bool moveIsLegal = isLegal(atRow,atCol,toRow,toCol);
 
         // Debug.Log("piece to move exists? " + boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol));
         // Debug.Log("space to move to is empty? " + !boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
 
-        if (isLegal(atRow,atCol,toRow,toCol)) {
+        if (moveIsLegal) {
             Piece toMove = GetPiece(atRow, atCol);
             toMove.row = toRow;
             toMove.col = toCol;
@@ -78,15 +76,25 @@ public static class Board {
     Returns:    True if the piece is legally able to move to the requested square, false if not
     */
     public static bool isLegal(int atRow, int atCol, int toRow, int toCol) {
+        Piece p = GetPiece(atRow,atCol);
+
+        //Debug.Log("AtRow: " + atRow + "toRow " + toRow + "atCol " + atCol + "toCol " + toCol);
+
+
+        Debug.Log(p.myColour);
         // Checks if the requested tile to move to is out of bounds of the board array
-        if((atRow > 7 || atRow < 0) || (atCol > 7 || atCol < 0)) {
+        if((toRow > 7 || toRow < 0) || (toCol > 7 || toCol < 0)) {
             return false;
         } 
         // Checks if there exist a piece to move at the given column and row and if there already exists a piece at the requested row and column to move to
-        else if((boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)&& (!boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol)))) {
+        else if((!boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)) && (boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol))) {
             return false;
-        }
 
-        return true;
+        // Checks to see if red piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
+        } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
