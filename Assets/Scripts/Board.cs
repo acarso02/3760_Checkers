@@ -81,7 +81,7 @@ public static class Board {
         //Debug.Log("AtRow: " + atRow + "toRow " + toRow + "atCol " + atCol + "toCol " + toCol);
 
 
-        Debug.Log(p.myColour);
+        //Debug.Log(p.myColour);
         // Checks if the requested tile to move to is out of bounds of the board array
         if((toRow > 7 || toRow < 0) || (toCol > 7 || toCol < 0)) {
             return false;

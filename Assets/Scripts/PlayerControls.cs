@@ -10,10 +10,13 @@ public class PlayerControls : MonoBehaviour
     private Camera cam;
     private string relevantTag;
 
-    public bool redTurn = true;
+    private CamSwitch camSwitch;
+    private GameObject otherGameObject;
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(Camera.allCameras.Length);
         cam = GetComponent<Camera>();
 
         if (playerIsRed) {
@@ -81,10 +84,12 @@ public class PlayerControls : MonoBehaviour
                     //Move the model to the new location
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
 
-                    // Add Camera switch function call here upon successful completion of move
-                    /*if(redTurn == true) {
+                    // Camera Switch functionality upon legal move
+                    otherGameObject = GameObject.Find("CamSwitch");
+                    camSwitch = otherGameObject.GetComponent<CamSwitch>();
 
-                    }*/
+                    // Function call switches camera
+                    camSwitch.switchCam();
                 }
             }
         }
