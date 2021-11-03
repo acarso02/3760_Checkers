@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 /*
 This class models an 8x8 checkers gameboard
 
@@ -39,7 +40,6 @@ public static class Board {
     public static void RemovePiece(int r, int c) {
         Piece toRemove = boardModel.Find(p => p.row == r && p.col == c);
         boardModel.Remove(toRemove);
-        Destroy(hit.collider.gameObject);
     }
 
     public static Piece GetPiece(int r, int c) {
@@ -98,7 +98,7 @@ public static class Board {
         }
 
         //Check the red move more than 1 space
-        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red")) {
+        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3)) {
 
             if ((atCol < toCol) && (GetPiece(atRow + 1, atCol - 1).myColour.ToString() == "black")) {
                 RemovePiece(atRow + 1, atCol - 1);
@@ -112,7 +112,7 @@ public static class Board {
                 return false;
         }
         //Check the black move more than 1 space
-        else if (toRow - atRow < -1 && (p.myColour).ToString() == "black"){
+        else if ((toRow - atRow < -1 && (p.myColour).ToString() == "black") && (toRow - atRow > -3)){
 
             if ((atCol < toCol) && (GetPiece(atRow - 1, atCol + 1).myColour.ToString() == "red")) {
                 RemovePiece(atRow - 1, atCol + 1);
