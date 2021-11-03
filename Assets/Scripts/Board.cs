@@ -93,8 +93,46 @@ public static class Board {
         // Checks to see if red piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
         } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
             return false;
+      
+        }
+
+        //Check the red move more than 1 space for a capture
+        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3))
+        {
+
+            if ((atCol < toCol) && (GetPiece(atRow + 1, atCol - 1).myColour.ToString() == "black"))
+            {
+                RemovePiece(atRow + 1, atCol - 1);
+                return true;
+            }
+            else if ((atCol < toCol) && (GetPiece(atRow + 1, atCol + 1).myColour.ToString() == "black"))
+            {
+                RemovePiece(atRow + 1, atCol + 1);
+                return true;
+            }
+            else
+                return false;
+        }
+        //Check the black move more than 1 space for a capture
+        else if ((toRow - atRow < -1 && (p.myColour).ToString() == "black") && (toRow - atRow > -3))
+        {
+
+            if ((atCol < toCol) && (GetPiece(atRow - 1, atCol + 1).myColour.ToString() == "red"))
+            {
+                RemovePiece(atRow - 1, atCol + 1);
+                return true;
+            }
+            else if ((atCol > toCol) && (GetPiece(atRow - 1, atCol - 1).myColour.ToString() == "red"))
+            {
+                RemovePiece(atRow - 1, atCol - 1);
+                return true;
+            }
+            else
+                return false;
+        }
+
         // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
-        } else if((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
+        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
             return false;
         }else {
             return true;
