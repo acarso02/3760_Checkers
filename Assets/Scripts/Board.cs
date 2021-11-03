@@ -39,6 +39,7 @@ public static class Board {
     public static void RemovePiece(int r, int c) {
         Piece toRemove = boardModel.Find(p => p.row == r && p.col == c);
         boardModel.Remove(toRemove);
+        Destroy(hit.collider.gameObject);
     }
 
     public static Piece GetPiece(int r, int c) {
@@ -76,27 +77,56 @@ public static class Board {
     Returns:    True if the piece is legally able to move to the requested square, false if not
     */
     public static bool isLegal(int atRow, int atCol, int toRow, int toCol) {
-        Piece p = GetPiece(atRow,atCol);
+         Piece p = GetPiece(atRow,atCol);
 
         //Debug.Log("AtRow: " + atRow + "toRow " + toRow + "atCol " + atCol + "toCol " + toCol);
 
 
         //Debug.Log(p.myColour);
         // Checks if the requested tile to move to is out of bounds of the board array
-        if((toRow > 7 || toRow < 0) || (toCol > 7 || toCol < 0)) {
+        if ((toRow > 7 || toRow < 0) || (toCol > 7 || toCol < 0)) {
             return false;
-        } 
+        }
         // Checks if there exist a piece to move at the given column and row and if there already exists a piece at the requested row and column to move to
-        else if((!boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)) && (boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol))) {
+        else if ((!boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)) && (boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol))) {
             return false;
 
-        // Checks to see if red piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
-        } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
+            // Checks to see if red piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
+        } else if (((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
             return false;
-        // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
-        } else if((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
-            return false;
-        }else {
+            // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
+        }
+
+        //Check the red move more than 1 space
+        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red")) {
+
+            if ((atCol < toCol) && (GetPiece(atRow + 1, atCol - 1).myColour.ToString() == "black")) {
+                RemovePiece(atRow + 1, atCol - 1);
+                return true;
+            }
+            else if ((atCol < toCol) && (GetPiece(atRow + 1, atCol + 1).myColour.ToString() == "black")) {
+                RemovePiece(atRow + 1, atCol + 1);
+                return true;
+            }
+            else
+                return false;
+        }
+        //Check the black move more than 1 space
+        else if (toRow - atRow < -1 && (p.myColour).ToString() == "black"){
+
+            if ((atCol < toCol) && (GetPiece(atRow - 1, atCol + 1).myColour.ToString() == "red")) {
+                RemovePiece(atRow - 1, atCol + 1);
+                return true;
+            }
+            else if ((atCol > toCol) && (GetPiece(atRow - 1, atCol - 1).myColour.ToString() == "red")) {
+                RemovePiece(atRow - 1, atCol - 1);
+                return true;
+            }
+            else
+                return false;
+        }
+            
+        else {
             return true;
         }
     }
