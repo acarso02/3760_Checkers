@@ -16,14 +16,30 @@ public class CamSwitch : MonoBehaviour
     }
 
 
-    public void switchCam() {
-        if(flag == false) {
-            redCam.SetActive(true);
-            blackCam.SetActive(false);
-        } else {
-            redCam.SetActive(false);
-            blackCam.SetActive(true);
+    /*public void switchCam() {
+        if(Input.GetKeyUp(KeyCode.Space)) {
+            if(flag == false) {
+                redCam.SetActive(true);
+                blackCam.SetActive(false);
+            } else {
+                redCam.SetActive(false);
+                blackCam.SetActive(true);
+            }
+            flag = !flag;
         }
-        flag = !flag;
+
+    }*/
+
+    void Update() {
+        if(Input.GetKeyUp(KeyCode.Space)) {
+            if(flag == false) {
+                redCam.SetActive(true);
+                blackCam.SetActive(false);
+            } else {
+                redCam.SetActive(false);
+                blackCam.SetActive(true);
+            }
+            flag = !flag;
+        }
     }
 }

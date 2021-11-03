@@ -85,11 +85,11 @@ public class PlayerControls : MonoBehaviour
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
 
                     // Camera Switch functionality upon legal move
-                    otherGameObject = GameObject.Find("CamSwitch");
+                    /*otherGameObject = GameObject.Find("CamSwitch");
                     camSwitch = otherGameObject.GetComponent<CamSwitch>();
 
                     // Function call switches camera
-                    camSwitch.switchCam();
+                    camSwitch.switchCam();*/
                 }
             }
         }
