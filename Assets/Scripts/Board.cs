@@ -33,16 +33,31 @@ public static class Board {
         Piece newPiece = new Piece(r, c, mC);
         boardModel.Add(newPiece);
 
-        return newPiece;
+        return newPiece; 
     }
 
     public static void RemovePiece(int r, int c) {
-        Piece toRemove = boardModel.Find(p => p.row == r && p.col == c);
-        boardModel.Remove(toRemove);
+        if(boardModel.Exists(p => p.row == r && p.col == c)){
+            Piece toRemove = boardModel.Find(p => p.row == r && p.col == c);
+            boardModel.Remove(toRemove);
+        }
     }
 
     public static Piece GetPiece(int r, int c) {
         return boardModel.Find(p => p.row == r && p.col == c);
+    }
+
+    public static String GetPieceColour(int r, int c)
+    {
+        try
+        {
+            Piece piece = boardModel.Find(p => p.row == r && p.col == c);
+            return piece.myColour.ToString();
+        }
+        catch(Exception)
+        {
+            return "none";
+        }
     }
 
     //Deletes every Piece in boardModel
@@ -100,12 +115,12 @@ public static class Board {
         else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3))
         {
 
-            if ((atCol < toCol) && (GetPiece(atRow + 1, atCol - 1).myColour.ToString() == "black"))
+            if ((atCol < toCol) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
             {
                 RemovePiece(atRow + 1, atCol - 1);
                 return true;
             }
-            else if ((atCol < toCol) && (GetPiece(atRow + 1, atCol + 1).myColour.ToString() == "black"))
+            else if ((atCol < toCol) && (GetPieceColour(atRow + 1, atCol + 1) == "black"))
             {
                 RemovePiece(atRow + 1, atCol + 1);
                 return true;
@@ -117,12 +132,12 @@ public static class Board {
         else if ((toRow - atRow < -1 && (p.myColour).ToString() == "black") && (toRow - atRow > -3))
         {
 
-            if ((atCol < toCol) && (GetPiece(atRow - 1, atCol + 1).myColour.ToString() == "red"))
+            if ((atCol < toCol) && (GetPieceColour(atRow - 1, atCol + 1) == "red"))
             {
                 RemovePiece(atRow - 1, atCol + 1);
                 return true;
             }
-            else if ((atCol > toCol) && (GetPiece(atRow - 1, atCol - 1).myColour.ToString() == "red"))
+            else if ((atCol > toCol) && (GetPieceColour(atRow - 1, atCol - 1) == "red"))
             {
                 RemovePiece(atRow - 1, atCol - 1);
                 return true;

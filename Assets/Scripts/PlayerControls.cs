@@ -26,6 +26,11 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    public void DeletePiece(GameObject piece)
+    {
+        Destroy(piece);
+    }
+
     // Update is called once per frame
     void Update()
     {
