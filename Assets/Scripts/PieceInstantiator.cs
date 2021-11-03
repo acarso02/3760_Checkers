@@ -26,10 +26,10 @@ public class PieceInstantiator : MonoBehaviour
 
         if (isRed) {
             myColour = Colour.red;
-            myPiece = Board.AddPiece(atCol, atRow, myColour);
+            myPiece = Board.AddPiece(atCol, atRow, myColour, gameObject);
         } else if (isBlack) {
             myColour = Colour.black;
-            myPiece = Board.AddPiece(atCol, atRow, myColour);
+            myPiece = Board.AddPiece(atCol, atRow, myColour, gameObject);
         } else {
             Debug.Log("isRed or isBlack must be checked on Piece:" + gameObject.name);
         }

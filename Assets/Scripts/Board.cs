@@ -17,11 +17,13 @@ public class Piece {
     public int row;
     public int col;
     public Colour myColour;
+    public GameObject myPieceGameObject;
 
-    public Piece(int r, int c, Colour mC) {
+    public Piece(int r, int c, Colour mC, GameObject mPGO) {
         row = r;
         col = c;
         myColour = mC;
+        myPieceGameObject = mPGO;
     }
 }
 
@@ -29,11 +31,11 @@ public static class Board {
     private static List<Piece> boardModel = new List<Piece>();
 
     //Called when GameBoard is loaded in, by every piece GameObject
-    public static Piece AddPiece(int r, int c, Colour mC) {
-        Piece newPiece = new Piece(r, c, mC);
+    public static Piece AddPiece(int r, int c, Colour mC, GameObject mPGO) {
+        Piece newPiece = new Piece(r, c, mC, mPGO);
         boardModel.Add(newPiece);
-
-        return newPiece; 
+        
+        return newPiece;
     }
 
     public static void RemovePiece(int r, int c) {
