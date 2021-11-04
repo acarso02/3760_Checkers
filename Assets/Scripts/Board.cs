@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /*
@@ -13,7 +14,7 @@ public enum Colour {
     black
 }
 
-public class Piece {    
+public class Piece{    
     public int row;
     public int col;
     public Colour myColour;
@@ -26,6 +27,16 @@ public class Piece {
         myPieceGameObject = mPGO;
     }
 }
+
+
+public class PieceDestroyer : MonoBehaviour
+{
+    public static void DestroyPiece(Piece piece)
+    {
+        Destroy(piece.myPieceGameObject);
+    }
+}
+
 
 public static class Board {
     private static List<Piece> boardModel = new List<Piece>();
@@ -42,6 +53,7 @@ public static class Board {
         if(boardModel.Exists(p => p.row == r && p.col == c)){
             Piece toRemove = boardModel.Find(p => p.row == r && p.col == c);
             boardModel.Remove(toRemove);
+            PieceDestroyer.DestroyPiece(toRemove);
         }
     }
 
