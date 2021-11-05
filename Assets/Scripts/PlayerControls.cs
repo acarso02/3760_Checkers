@@ -16,7 +16,6 @@ public class PlayerControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(Camera.allCameras.Length);
         cam = GetComponent<Camera>();
 
         if (playerIsRed) {
@@ -95,6 +94,9 @@ public class PlayerControls : MonoBehaviour
 
                     // Function call switches camera
                     camSwitch.switchCam();*/
+                }
+                else {
+                    Debug.Log("The requested piece move is not a legal move!");
                 }
             }
         }
