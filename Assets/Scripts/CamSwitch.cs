@@ -40,6 +40,12 @@ public class CamSwitch : MonoBehaviour
                 blackCam.SetActive(true);
             }
             flag = !flag;
+
+            string winner = PlayerControls.hasWon();
+            if (winner != "None") {
+                Debug.Log(winner + " wins!");
+            //SceneManager.LoadScene("Scenes/GameBoard");
+            }
         }
     }
 }

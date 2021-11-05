@@ -59,7 +59,7 @@ public class PlayerControls : MonoBehaviour
         return null;
     }
 
-    private string hasWon() {
+    public static string hasWon() {
         Debug.Log(Board.getLegalMoveAmount("red"));
 
         if (Board.getPieceAmount("Red") == 0 || Board.getLegalMoveAmount("red") == 0){
@@ -112,9 +112,10 @@ public class PlayerControls : MonoBehaviour
             }
         }
 
-        if (hasWon() != "None") {
-            Debug.Log(hasWon() + " wins!");
+        /*string winner = hasWon();
+            if (winner != "None") {
+                Debug.Log(winner + " wins!");
             //SceneManager.LoadScene("Scenes/GameBoard");
-        }
+        }*/
     }
 }

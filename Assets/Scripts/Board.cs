@@ -129,7 +129,7 @@ public static class Board {
         else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3))
         {
 
-            if ((atCol < toCol) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
+            if ((atCol > toCol) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
             {
                 RemovePiece(atRow + 1, atCol - 1);
                 return true;
@@ -187,8 +187,8 @@ public static class Board {
         foreach (Piece p in boardModel) {
             if((p.myColour).ToString() == "red" && colour == "red") { //check if red has legal moves
                 Piece leftPiece = GetPiece(p.row + 1, p.col - 1);
-                //Piece leftPiece = null;
                 Piece rightPiece = GetPiece(p.row + 1, p.col + 1);
+                //Piece leftPiece = null;
                 //Piece rightPiece = null;
 
                 /*if (leftPiece == null)
