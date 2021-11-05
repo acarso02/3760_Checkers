@@ -135,22 +135,37 @@ public static class Board {
       
         }
 
+        // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
+        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    /*
+    Desc:       Checks to see if the given coordinates for a piece to move will result in a capture
+    Returns:    The piece to remove if a capture happens, null otherwise
+    */
+    public static Piece isCapture(int atRow, int atCol, int toRow, int toCol){
+        Piece p = GetPiece(atRow, atCol);
+
         //Check the red move more than 1 space for a capture
-        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3))
+        if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3))
         {
 
-            if ((atCol < toCol) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
+            if ((atCol > toCol) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
             {
-                RemovePiece(atRow + 1, atCol - 1);
-                return true;
+                //RemovePiece(atRow + 1, atCol - 1);
+                return GetPiece(atRow + 1, atCol - 1);
             }
             else if ((atCol < toCol) && (GetPieceColour(atRow + 1, atCol + 1) == "black"))
             {
-                RemovePiece(atRow + 1, atCol + 1);
-                return true;
+                //RemovePiece(atRow + 1, atCol + 1);
+                return GetPiece(atRow + 1, atCol + 1);
             }
             else
-                return false;
+                return null;
         }
         //Check the black move more than 1 space for a capture
         else if ((toRow - atRow < -1 && (p.myColour).ToString() == "black") && (toRow - atRow > -3))
@@ -158,23 +173,20 @@ public static class Board {
 
             if ((atCol < toCol) && (GetPieceColour(atRow - 1, atCol + 1) == "red"))
             {
-                RemovePiece(atRow - 1, atCol + 1);
-                return true;
+                //RemovePiece(atRow - 1, atCol + 1);
+                return GetPiece(atRow - 1, atCol + 1);
             }
             else if ((atCol > toCol) && (GetPieceColour(atRow - 1, atCol - 1) == "red"))
             {
-                RemovePiece(atRow - 1, atCol - 1);
-                return true;
+                //RemovePiece(atRow - 1, atCol - 1);
+                return GetPiece(atRow - 1, atCol - 1);
             }
             else
-                return false;
+                return null;
         }
 
-        // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
-        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
-            return false;
-        }else {
-            return true;
+        else{
+            return null;
         }
     }
 }
