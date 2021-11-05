@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -58,6 +59,18 @@ public class PlayerControls : MonoBehaviour
         return null;
     }
 
+    private string hasWon() {
+        Debug.Log(Board.getLegalMoveAmount("red"));
+
+        if (Board.getPieceAmount("Red") == 0 || Board.getLegalMoveAmount("red") == 0){
+            return "Black";
+        }
+        else if (Board.getPieceAmount("Black") == 0 || Board.getLegalMoveAmount("black") == 0) {
+            return "Red";
+        }
+        return "None";
+    }
+
     IEnumerator WaitForBoardClick(GameObject piece) {
         yield return null; //In a coroutine yield return null means "wait for one frame"
         while(!Input.GetMouseButtonDown(0)) {
@@ -65,7 +78,7 @@ public class PlayerControls : MonoBehaviour
         }
         //check if the player clicked on an empty square to move to (in checkers its not possible to move to red squares)
         RaycastHit hit;
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);        
         
         if (Physics.Raycast(ray.origin, ray.direction, out hit)) {
             if (hit.collider.CompareTag("Black Square")) {
@@ -97,6 +110,11 @@ public class PlayerControls : MonoBehaviour
                     camSwitch.switchCam();*/
                 }
             }
+        }
+
+        if (hasWon() != "None") {
+            Debug.Log(hasWon() + " wins!");
+            //SceneManager.LoadScene("Scenes/GameBoard");
         }
     }
 }
