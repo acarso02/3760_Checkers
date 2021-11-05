@@ -87,6 +87,7 @@ public static class Board {
 
         // Verify move is legal
         bool moveIsLegal = isLegal(atRow,atCol,toRow,toCol);
+        Piece toRemove = isCapture(atRow, atCol, toRow, toCol);
 
         // Debug.Log("piece to move exists? " + boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol));
         // Debug.Log("space to move to is empty? " + !boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
@@ -95,6 +96,15 @@ public static class Board {
             Piece toMove = GetPiece(atRow, atCol);
             toMove.row = toRow;
             toMove.col = toCol;
+            return true;
+        }
+        else if (toRemove != null)
+        {
+            Piece toMove = GetPiece(atRow, atCol);
+            toMove.row = toRow;
+            toMove.col = toCol;
+            boardModel.Remove(toRemove);
+            PieceDestroyer.DestroyPiece(toRemove);
             return true;
         }
         return false;
