@@ -7,6 +7,10 @@ public class CamSwitch : MonoBehaviour
     public GameObject redCam;
     public GameObject blackCam;
 
+    public GameObject winPopup;
+    public GameObject redText;
+    public GameObject blackText;
+
     private bool flag = true;
 
     void Start() {
@@ -44,7 +48,14 @@ public class CamSwitch : MonoBehaviour
             string winner = Board.hasWon();
             if (winner != "None") {
                 Debug.Log(winner + " wins!");
-                //SceneManager.LoadScene("Scenes/GameBoard");
+                if (winPopup != null)
+                    if (winner == "Red") {
+                        redText.SetActive(true);
+                    }
+                    else if (winner == "Black") {
+                        blackText.SetActive(true);
+                    }
+                winPopup.SetActive(true);
             }
         }
     }
