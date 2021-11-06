@@ -58,17 +58,6 @@ public class PlayerControls : MonoBehaviour
         return null;
     }
 
-    public static string hasWon() {
-        Debug.Log(Board.getLegalMoveAmount("red"));
-
-        if (Board.getPieceAmount("Red") == 0 || Board.getLegalMoveAmount("red") == 0){
-            return "Black";
-        }
-        else if (Board.getPieceAmount("Black") == 0 || Board.getLegalMoveAmount("black") == 0) {
-            return "Red";
-        }
-        return "None";
-    }
 
     IEnumerator WaitForBoardClick(GameObject piece) {
         yield return null; //In a coroutine yield return null means "wait for one frame"
@@ -113,11 +102,5 @@ public class PlayerControls : MonoBehaviour
                 }
             }
         }
-
-        /*string winner = hasWon();
-            if (winner != "None") {
-                Debug.Log(winner + " wins!");
-            //SceneManager.LoadScene("Scenes/GameBoard");
-        }*/
     }
 }

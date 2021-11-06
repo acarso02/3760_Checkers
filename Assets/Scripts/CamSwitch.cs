@@ -41,10 +41,10 @@ public class CamSwitch : MonoBehaviour
             }
             flag = !flag;
 
-            string winner = PlayerControls.hasWon();
+            string winner = Board.hasWon();
             if (winner != "None") {
                 Debug.Log(winner + " wins!");
-            //SceneManager.LoadScene("Scenes/GameBoard");
+                //SceneManager.LoadScene("Scenes/GameBoard");
             }
         }
     }
