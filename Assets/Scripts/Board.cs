@@ -96,15 +96,11 @@ public static class Board {
             Piece toMove = GetPiece(atRow, atCol);
             toMove.row = toRow;
             toMove.col = toCol;
-            return true;
-        }
-        else if (toRemove != null)
-        {
-            Piece toMove = GetPiece(atRow, atCol);
-            toMove.row = toRow;
-            toMove.col = toCol;
-            boardModel.Remove(toRemove);
-            PieceDestroyer.DestroyPiece(toRemove);
+            if(toRemove != null){
+                boardModel.Remove(toRemove);
+                PieceDestroyer.DestroyPiece(toRemove);
+                return true;
+            }
             return true;
         }
         return false;
@@ -132,12 +128,16 @@ public static class Board {
         // Checks to see if red piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
         } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
             return false;
-      
         }
 
         // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
         else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
-            return false;
+            if (isCapture(atRow, atCol, toRow, toCol) != null){
+                return true;
+            }
+            else { 
+                return false;
+            }
         }else {
             return true;
         }
