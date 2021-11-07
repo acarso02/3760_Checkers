@@ -195,86 +195,90 @@ public static class Board {
     Returns:    Integer of how many pieces of a certain colour are on the board
     */
     private static int getPieceAmount(String pieceColour) {
-        int count = 0;
-
         //finds all game objects with a "Red Piece" or "Black Piece" tag
-        count = GameObject.FindGameObjectsWithTag(pieceColour + " Piece").Length;
+        int count = GameObject.FindGameObjectsWithTag(pieceColour + " Piece").Length;
         return count/2; //*note* since pieces consist of both game models and game objects count must be divided by 2
 
         /*
-        foreach (Piece p in boardModel) {
+        foreach (Piece p in boardModel) { //other method of counting how many total pieces each player has
             if ((p.myColour).ToString() == pieceColour) {
                 count++;
             }
         }
-
         return count; */
     }
 
+    /*
+    Desc:       Counts the amount of legal moves a player has by going through every piece they have and summing up their moves
+    Returns:    Integer of how many moves the player has
+    */
     private static int getLegalMoveAmount(string colour) { //does not consider captures when counting legal moves atm
         int count = 0;
 
         foreach (Piece p in boardModel) {
             if((p.myColour).ToString() == "red" && colour == "red") { //check if red has legal moves
+                //below variables are used to check if there are pieces on the left or right of current piece
                 Piece leftPiece = GetPiece(p.row + 1, p.col - 1);
                 Piece rightPiece = GetPiece(p.row + 1, p.col + 1);
                 Piece twoLeft = GetPiece(p.row + 2, p.col - 2);
                 Piece twoRight = GetPiece(p.row + 2, p.col + 2);
-                //Piece leftPiece = null;
-                //Piece rightPiece = null;
 
-                /*if (leftPiece == null)
-                    Debug.Log(p.row + " " + p.col);*/
-                
-                //Debug.Log(isCapture(p.row, p.col, p.row + 2, p.col + 2));
-                
-                if (isLegal(p.row, p.col, p.row + 1, p.col - 1) == true && leftPiece == null) { //check if diagonal left is legal
+                //check if move left is legal                
+                if (isLegal(p.row, p.col, p.row + 1, p.col - 1) == true && leftPiece == null) { 
                     count++;
                 }
-                else if (isCapture(p.row, p.col, p.row + 2, p.col - 2) != null && twoLeft == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) {
+                //check if a capture left is legal
+                else if (isCapture(p.row, p.col, p.row + 2, p.col - 2) != null && twoLeft == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) { 
                     count++;
                 }
 
-                if (isLegal(p.row, p.col, p.row + 1, p.col + 1) && rightPiece == null) {
+                //check if move right is legal
+                if (isLegal(p.row, p.col, p.row + 1, p.col + 1) && rightPiece == null) { 
                     count++;
-                } 
+                }
+                //check if a capture right is legal
                 else if (isCapture(p.row, p.col, p.row + 2, p.col + 2) != null && twoRight == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col + 2 < 8 && p.col + 2 >= 0))) {
                     count++;
                 }
-                //Debug.Log(isLegal(p.row, p.col, p.row + 1, p.col - 1));
-                //Debug.Log(p.myColour + " @ " + p.row + ", " + p.col + " count: " +  count);
             }
             else if ((p.myColour).ToString() == "black" && colour == "black") { //check if black has legal moves
+                //below variables are used to check if there are pieces on the left or right of current piece
                 Piece leftPiece = GetPiece(p.row - 1, p.col - 1);
                 Piece rightPiece = GetPiece(p.row - 1, p.col + 1);
                 Piece twoLeft = GetPiece(p.row - 2, p.col - 2);
                 Piece twoRight = GetPiece(p.row - 2, p.col + 2);
 
-                if (isLegal(p.row, p.col, p.row - 1, p.col - 1) == true && leftPiece == null) {
+                //check if move left is legal
+                if (isLegal(p.row, p.col, p.row - 1, p.col - 1) == true && leftPiece == null) { 
                     count++;
                 }
+                //check if capture left is legal
                 else if (isCapture(p.row, p.col, p.row - 2, p.col - 2) != null && twoLeft == null && ((p.row - 2 < 8 && p.row - 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) {
                     count++;
                 }
 
+                //check if move right is legal
                 if (isLegal(p.row, p.col, p.row - 1, p.col + 1) == true && rightPiece == null) {
                     count++;
                 }
+                //check if capture right is legal
                 else if (isCapture(p.row, p.col, p.row - 2, p.col + 2) != null && twoRight == null && ((p.row - 2 < 8 && p.row - 2 >= 0) && (p.col + 2 < 8 && p.col + 2 >= 0))) {
                     count++;
                 }
             }
-            //Debug.Log("I am " + p.myColour + " at row " + p.row + ", col " + p.col);
         }
 
         return count;
     }
 
+
+    /*
+    Desc:       Checks if one of the players has won the game and returns the winner
+    Returns:    String of which player won the game; 'Red' or 'Black'
+    */
     public static string hasWon() {
         int redMoveAmount = getLegalMoveAmount("red");
         int blackMoveAmount = getLegalMoveAmount("black");
-
-        //Debug.Log("Red: " + redMoveAmount + ", Black: " + blackMoveAmount);
 
         if (getPieceAmount("Red") == 0 || redMoveAmount == 0){
             return "Black";
