@@ -129,7 +129,11 @@ public static class Board {
         } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
             return false;
         }
-
+        // Check for sideways movement
+        else if(toRow == atRow)
+        {
+            return false;
+        }
         // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
         else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
             if (isCapture(atRow, atCol, toRow, toCol) != null){
