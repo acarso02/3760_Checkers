@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -57,6 +58,7 @@ public class PlayerControls : MonoBehaviour
         return null;
     }
 
+
     IEnumerator WaitForBoardClick(GameObject piece) {
         yield return null; //In a coroutine yield return null means "wait for one frame"
         while(!Input.GetMouseButtonDown(0)) {
@@ -64,7 +66,7 @@ public class PlayerControls : MonoBehaviour
         }
         //check if the player clicked on an empty square to move to (in checkers its not possible to move to red squares)
         RaycastHit hit;
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);        
         
         if (Physics.Raycast(ray.origin, ray.direction, out hit)) {
             if (hit.collider.CompareTag("Black Square")) {

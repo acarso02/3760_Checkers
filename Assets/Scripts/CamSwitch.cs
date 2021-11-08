@@ -7,6 +7,10 @@ public class CamSwitch : MonoBehaviour
     public GameObject redCam;
     public GameObject blackCam;
 
+    public GameObject winPopup;
+    public GameObject redText;
+    public GameObject blackText;
+
     private bool flag = true;
 
     void Start() {
@@ -40,6 +44,20 @@ public class CamSwitch : MonoBehaviour
                 blackCam.SetActive(true);
             }
             flag = !flag;
+
+            string winner = Board.hasWon(); //checks for winner
+            if (winner != "None") { //if there is a winner
+                Debug.Log(winner + " wins!");
+                if (winPopup != null)
+                    //sets active which player won; red or black
+                    if (winner == "Red") {
+                        redText.SetActive(true);
+                    }
+                    else if (winner == "Black") {
+                        blackText.SetActive(true);
+                    }
+                winPopup.SetActive(true); //displays winning popup
+            }
         }
     }
 }
