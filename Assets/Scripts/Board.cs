@@ -86,8 +86,8 @@ public static class Board {
     public static bool MovePiece(int atRow, int atCol, int toRow, int toCol) {
 
         // Verify move is legal
-        bool moveIsLegal = isLegal(atRow,atCol,toRow,toCol);
-        Piece toRemove = isCapture(atRow, atCol, toRow, toCol);
+        bool moveIsLegal = IsLegal(atRow,atCol,toRow,toCol);
+        Piece toRemove = IsCapture(atRow, atCol, toRow, toCol);
 
         // Debug.Log("piece to move exists? " + boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol));
         // Debug.Log("space to move to is empty? " + !boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
@@ -110,7 +110,7 @@ public static class Board {
     Desc:       Checks to see if the given coordinates for a piece to move to is legal or not
     Returns:    True if the piece is legally able to move to the requested square, false if not
     */
-    public static bool isLegal(int atRow, int atCol, int toRow, int toCol) {
+    public static bool IsLegal(int atRow, int atCol, int toRow, int toCol) {
         Piece p = GetPiece(atRow,atCol);
 
         //Debug.Log("AtRow: " + atRow + "toRow " + toRow + "atCol " + atCol + "toCol " + toCol);
@@ -136,7 +136,7 @@ public static class Board {
         }
         // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
         else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
-            if (isCapture(atRow, atCol, toRow, toCol) != null){
+            if (IsCapture(atRow, atCol, toRow, toCol) != null){
                 return true;
             }
             else { 
@@ -151,7 +151,7 @@ public static class Board {
     Desc:       Checks to see if the given coordinates for a piece to move will result in a capture
     Returns:    The piece to remove if a capture happens, null otherwise
     */
-    public static Piece isCapture(int atRow, int atCol, int toRow, int toCol){
+    public static Piece IsCapture(int atRow, int atCol, int toRow, int toCol){
         Piece p = GetPiece(atRow, atCol);
 
         //Check the red move more than 1 space for a capture
@@ -228,20 +228,20 @@ public static class Board {
                 Piece twoRight = GetPiece(p.row + 2, p.col + 2);
 
                 //check if move left is legal                
-                if (isLegal(p.row, p.col, p.row + 1, p.col - 1) == true && leftPiece == null) { 
+                if (IsLegal(p.row, p.col, p.row + 1, p.col - 1) == true && leftPiece == null) { 
                     count++;
                 }
                 //check if a capture left is legal
-                else if (isCapture(p.row, p.col, p.row + 2, p.col - 2) != null && twoLeft == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) { 
+                else if (IsCapture(p.row, p.col, p.row + 2, p.col - 2) != null && twoLeft == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) { 
                     count++;
                 }
 
                 //check if move right is legal
-                if (isLegal(p.row, p.col, p.row + 1, p.col + 1) && rightPiece == null) { 
+                if (IsLegal(p.row, p.col, p.row + 1, p.col + 1) && rightPiece == null) { 
                     count++;
                 }
                 //check if a capture right is legal
-                else if (isCapture(p.row, p.col, p.row + 2, p.col + 2) != null && twoRight == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col + 2 < 8 && p.col + 2 >= 0))) {
+                else if (IsCapture(p.row, p.col, p.row + 2, p.col + 2) != null && twoRight == null && ((p.row + 2 < 8 && p.row + 2 >= 0) && (p.col + 2 < 8 && p.col + 2 >= 0))) {
                     count++;
                 }
             }
@@ -253,20 +253,20 @@ public static class Board {
                 Piece twoRight = GetPiece(p.row - 2, p.col + 2);
 
                 //check if move left is legal
-                if (isLegal(p.row, p.col, p.row - 1, p.col - 1) == true && leftPiece == null) { 
+                if (IsLegal(p.row, p.col, p.row - 1, p.col - 1) == true && leftPiece == null) { 
                     count++;
                 }
                 //check if capture left is legal
-                else if (isCapture(p.row, p.col, p.row - 2, p.col - 2) != null && twoLeft == null && ((p.row - 2 < 8 && p.row - 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) {
+                else if (IsCapture(p.row, p.col, p.row - 2, p.col - 2) != null && twoLeft == null && ((p.row - 2 < 8 && p.row - 2 >= 0) && (p.col - 2 < 8 && p.col - 2 >= 0))) {
                     count++;
                 }
 
                 //check if move right is legal
-                if (isLegal(p.row, p.col, p.row - 1, p.col + 1) == true && rightPiece == null) {
+                if (IsLegal(p.row, p.col, p.row - 1, p.col + 1) == true && rightPiece == null) {
                     count++;
                 }
                 //check if capture right is legal
-                else if (isCapture(p.row, p.col, p.row - 2, p.col + 2) != null && twoRight == null && ((p.row - 2 < 8 && p.row - 2 >= 0) && (p.col + 2 < 8 && p.col + 2 >= 0))) {
+                else if (IsCapture(p.row, p.col, p.row - 2, p.col + 2) != null && twoRight == null && ((p.row - 2 < 8 && p.row - 2 >= 0) && (p.col + 2 < 8 && p.col + 2 >= 0))) {
                     count++;
                 }
             }
@@ -280,7 +280,7 @@ public static class Board {
     Desc:       Checks if one of the players has won the game and returns the winner
     Returns:    String of which player won the game; 'Red' or 'Black'
     */
-    public static string hasWon() {
+    public static string HasWon() {
         int redMoveAmount = getLegalMoveAmount("red");
         int blackMoveAmount = getLegalMoveAmount("black");
 

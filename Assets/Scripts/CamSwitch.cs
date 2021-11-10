@@ -45,7 +45,7 @@ public class CamSwitch : MonoBehaviour
             }
             flag = !flag;
 
-            string winner = Board.hasWon(); //checks for winner
+            string winner = Board.HasWon(); //checks for winner
             if (winner != "None") { //if there is a winner
                 Debug.Log(winner + " wins!");
                 if (winPopup != null)
