@@ -146,8 +146,8 @@ public static class Board {
         else if((!boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)) && (boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol))) {
             return false;
 
-        // Checks to see if red piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
-        } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) {
+        // Checks to see if piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
+        } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow) && p.isKing == false) {
             return false;
         }
         // Check for sideways movement
