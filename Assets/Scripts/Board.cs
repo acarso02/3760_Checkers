@@ -33,6 +33,13 @@ public class Piece{
     {
         if ((myColour == Colour.red && toRow == 7) || (myColour == Colour.black && toRow == 0))
         {
+        	/*
+			myPieceGameObject.transform.GetChild(1)
+        		Get the second child of the Piece game object related to this, which will always be the crown
+			.gameObject.SetActive(true)
+				Set the crown to be active
+        	*/
+        	myPieceGameObject.transform.GetChild(1).gameObject.SetActive(true);
             return true;
         }
         else
