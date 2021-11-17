@@ -136,7 +136,6 @@ public static class Board {
 
         //Debug.Log("AtRow: " + atRow + "toRow " + toRow + "atCol " + atCol + "toCol " + toCol);
 
-
         //Debug.Log(p.myColour);
         // Checks if the requested tile to move to is out of bounds of the board array
         if((toRow > 7 || toRow < 0) || (toCol > 7 || toCol < 0)) {
@@ -146,8 +145,8 @@ public static class Board {
         else if((!boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol)) && (boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol))) {
             return false;
 
-        // Checks to see if piece wants to move backwords *Note: Will need to add additionally functionality to this once king piece is a thing
-        } else if(((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow) && p.isKing == false) {
+        // Checks to see if piece wants to move backwords *Note: Will allow king piece to move backward
+        } else if((((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) && p.isKing == false) {
             return false;
         }
         // Check for sideways movement
@@ -155,8 +154,9 @@ public static class Board {
         {
             return false;
         }
-        // Checks to see if red moves more than one tile for a normal move or if black moves more than one tile for a normal move
-        else if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") || (toRow - atRow < -1 && (p.myColour).ToString() == "black")) {
+        // Checks to see if piece moves more than one tile for a normal move 
+        else if (Math.Abs(toRow - atRow) > 1) {
+            //Checks if abnormal move is a capture
             if (IsCapture(atRow, atCol, toRow, toCol) != null){
                 return true;
             }
