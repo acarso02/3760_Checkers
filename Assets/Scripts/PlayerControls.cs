@@ -90,6 +90,12 @@ public class PlayerControls : MonoBehaviour
                     //Move the model to the new location
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
 
+                    //check for king move
+                    if(mP.isKingMove(atRow, atCol, toRow, toCol) == true)
+                    {
+                        mP.isKing = true;
+                    }
+
                     // Camera Switch functionality upon legal move
                     /*otherGameObject = GameObject.Find("CamSwitch");
                     camSwitch = otherGameObject.GetComponent<CamSwitch>();
@@ -103,4 +109,6 @@ public class PlayerControls : MonoBehaviour
             }
         }
     }
+
+
 }

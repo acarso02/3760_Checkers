@@ -19,12 +19,26 @@ public class Piece{
     public int col;
     public Colour myColour;
     public GameObject myPieceGameObject;
+    public bool isKing;
 
     public Piece(int r, int c, Colour mC, GameObject mPGO) {
         row = r;
         col = c;
         myColour = mC;
         myPieceGameObject = mPGO;
+        isKing = false;
+    }
+
+    public Boolean isKingMove(int atRow, int atCol, int toRow, int toCol)
+    {
+        if ((myColour == Colour.red && toRow == 7) || (myColour == Colour.black && toRow == 0))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
