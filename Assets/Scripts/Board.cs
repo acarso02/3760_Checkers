@@ -26,6 +26,8 @@ public class Piece{
         myColour = mC;
         myPieceGameObject = mPGO;
     }
+
+    public bool flag;
 }
 
 
