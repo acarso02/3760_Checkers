@@ -39,7 +39,7 @@ public class PlayerControls : MonoBehaviour
             GameObject piece = GetClickedOnPiece();
             if (piece != null) {
                 PieceGameFeel pGF = piece.GetComponent<PieceGameFeel>();
-                pGF.doPieceJiggle();
+                pGF.DoPieceJiggle();
                 StartCoroutine(WaitForBoardClick(piece));
             }
         }

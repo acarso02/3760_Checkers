@@ -5,6 +5,7 @@ using UnityEngine;
 public class PieceGameFeel : MonoBehaviour
 {
     public AudioSource aS;
+    public List<AudioClip> soundList;
 
     public float jiggleTimeInSeconds;
     public float stepAmountInSeconds;
@@ -16,18 +17,18 @@ public class PieceGameFeel : MonoBehaviour
         isJiggling = false;
     }
 
-    public void doPieceJiggle() {
-        if (!isJiggling) StartCoroutine(pieceJiggle(jiggleTimeInSeconds));
+    public void DoPieceJiggle() {
+        if (!isJiggling) StartCoroutine(PieceJiggle(jiggleTimeInSeconds));
     }
 
-    private IEnumerator pieceJiggle(float lengthInSeconds) {
+    private IEnumerator PieceJiggle(float lengthInSeconds) {
         float curTime = 0;
         float curPercent = 0;
         float scale = 0;
 
         isJiggling = true;
 
-        aS.Play();
+        PlayRandomSound();
         while (curTime < lengthInSeconds) {
             //calculate the new scale acording to this graph https://pasteboard.co/up1v1vn2ojOi.png
             scale = (Mathf.Sin(curPercent/0.16f + 1.6f)+3)/4;
@@ -44,5 +45,13 @@ public class PieceGameFeel : MonoBehaviour
         }
 
         isJiggling = false;
+    }
+
+    private void PlayRandomSound() {
+        int index = Random.Range(0, soundList.Count);
+        // Debug.Log(index);
+        // Debug.Log(soundList[index]);
+        aS.clip = soundList[index];
+        aS.Play();
     }
 }
