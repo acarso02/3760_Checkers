@@ -12,7 +12,7 @@ public class CamSwitch : MonoBehaviour
     public GameObject redText;
     public GameObject blackText;
 
-    private bool flag = true;
+    private bool camFlag = true;
 
     private static List<Piece> Pieces;
 
@@ -22,34 +22,24 @@ public class CamSwitch : MonoBehaviour
         //Debug.Log(Camera.main);
     }
 
-
-    /*public void switchCam() {
-        if(Input.GetKeyUp(KeyCode.Space)) {
-            if(flag == false) {
-                redCam.SetActive(true);
-                blackCam.SetActive(false);
-            } else {
-                redCam.SetActive(false);
-                blackCam.SetActive(true);
-            }
-            flag = !flag;
-        }
-
-    }*/
-
     void Update() {
         if(Input.GetKeyUp(KeyCode.Space)) {
 
             Pieces = Board.GetPieceList();
 
-            if(flag == false) {
+            if(camFlag == false) {
                 redCam.SetActive(true);
                 blackCam.SetActive(false);
             } else {
                 redCam.SetActive(false);
                 blackCam.SetActive(true);
             }
-            flag = !flag;
+            camFlag = !camFlag;
+
+            // Add functionality for setting all pieces back to false flag
+            foreach (Piece piece in Pieces) {
+                piece.flag = false;
+            }
 
             string winner = Board.HasWon(); //checks for winner
             if (winner != "None") { //if there is a winner
@@ -63,10 +53,6 @@ public class CamSwitch : MonoBehaviour
                         blackText.SetActive(true);
                     }
                     winPopup.SetActive(true); //displays winning popup
-                }
-                // Add functionality for setting all pieces back to false flag
-                foreach (Piece piece in Pieces) {
-                    piece.flag = false;
                 }
             }
         }
