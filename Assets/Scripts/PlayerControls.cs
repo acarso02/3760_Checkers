@@ -38,6 +38,8 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             GameObject piece = GetClickedOnPiece();
             if (piece != null) {
+                PieceGameFeel pGF = piece.GetComponent<PieceGameFeel>();
+                pGF.doPieceJiggle();
                 StartCoroutine(WaitForBoardClick(piece));
             }
         }
