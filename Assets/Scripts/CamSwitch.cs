@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class CamSwitch : MonoBehaviour
     public GameObject blackText;
 
     private bool flag = true;
+
+    private static List<Piece> Pieces;
 
     void Start() {
         redCam.SetActive(true);
@@ -36,6 +39,9 @@ public class CamSwitch : MonoBehaviour
 
     void Update() {
         if(Input.GetKeyUp(KeyCode.Space)) {
+
+            Pieces = Board.GetPieceList();
+
             if(flag == false) {
                 redCam.SetActive(true);
                 blackCam.SetActive(false);
@@ -48,7 +54,7 @@ public class CamSwitch : MonoBehaviour
             string winner = Board.HasWon(); //checks for winner
             if (winner != "None") { //if there is a winner
                 Debug.Log(winner + " wins!");
-                if (winPopup != null)
+                if (winPopup != null) {
                     //sets active which player won; red or black
                     if (winner == "Red") {
                         redText.SetActive(true);
@@ -56,7 +62,12 @@ public class CamSwitch : MonoBehaviour
                     else if (winner == "Black") {
                         blackText.SetActive(true);
                     }
-                winPopup.SetActive(true); //displays winning popup
+                    winPopup.SetActive(true); //displays winning popup
+                }
+                // Add functionality for setting all pieces back to false flag
+                foreach (Piece piece in Pieces) {
+                    piece.flag = false;
+                }
             }
         }
     }
