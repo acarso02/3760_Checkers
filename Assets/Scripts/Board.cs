@@ -99,6 +99,14 @@ public static class Board {
 
         if (moveIsLegal) {
             Piece toMove = GetPiece(atRow, atCol);
+
+            // Checks to see if there is currently a hotpiece selected to prevent other pieces from moving in the same turn
+            foreach (Piece pieces in GetPieceList()) {
+                if(toMove.flag == false && pieces.flag == true) {
+                    return false;
+                }
+            }
+
             toMove.row = toRow;
             toMove.col = toCol;
             if(toRemove != null){
