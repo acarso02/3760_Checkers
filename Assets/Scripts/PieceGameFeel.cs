@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PieceGameFeel : MonoBehaviour
 {
-    public AudioSource aS;
-    public List<AudioClip> soundList;
+    public AudioSource jiggleAudioSource;
+    public List<AudioClip> jiggleSoundList;
+
+    public AudioSource moveAudioSource;
+    public List<AudioClip> moveSoundList;
 
     public float jiggleTimeInSeconds;
     public float stepAmountInSeconds;
@@ -28,13 +31,13 @@ public class PieceGameFeel : MonoBehaviour
 
         isJiggling = true;
 
-        PlayRandomSound();
+        PlayRandomJiggleSound();
         while (curTime < lengthInSeconds) {
             //calculate the new scale acording to this graph https://pasteboard.co/up1v1vn2ojOi.png
             scale = (Mathf.Sin(curPercent/0.16f + 1.6f)+3)/4;
 
             transform.localScale = new Vector3(scale,scale,scale);
-            aS.pitch = scale;
+            jiggleAudioSource.pitch = scale;
 
             //increase the amount of time
             curTime += stepAmountInSeconds;
@@ -47,11 +50,15 @@ public class PieceGameFeel : MonoBehaviour
         isJiggling = false;
     }
 
-    private void PlayRandomSound() {
-        int index = Random.Range(0, soundList.Count);
-        // Debug.Log(index);
-        // Debug.Log(soundList[index]);
-        aS.clip = soundList[index];
-        aS.Play();
+    private void PlayRandomJiggleSound() {
+        int index = Random.Range(0, jiggleSoundList.Count);
+        jiggleAudioSource.clip = jiggleSoundList[index];
+        jiggleAudioSource.Play();
+    }
+
+    public void PlayRandomMoveSound() {
+        int index = Random.Range(0, moveSoundList.Count);
+        moveAudioSource.clip = moveSoundList[index];
+        moveAudioSource.Play();
     }
 }

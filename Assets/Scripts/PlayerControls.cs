@@ -91,6 +91,8 @@ public class PlayerControls : MonoBehaviour
                 if (canMove) {
                     //Move the model to the new location
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
+                    PieceGameFeel pGF = piece.GetComponent<PieceGameFeel>();
+                    pGF.PlayRandomMoveSound();
 
                     // Camera Switch functionality upon legal move
                     /*otherGameObject = GameObject.Find("CamSwitch");
