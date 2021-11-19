@@ -75,7 +75,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f5a6a6964b655824a946f38944cf0cc9, type: 3}
   - {fileID: 8300000, guid: 6f21da76155cfe54f89cea5e40a774f6, type: 3}
   - {fileID: 8300000, guid: d72a7ff50160ab64981c5309060f47c3, type: 3}
+  deathExplosion: {fileID: 3755901115127323017, guid: 0d7b44316b1a50f4db4702e10c932c15, type: 3}
   jiggleTimeInSeconds: 1
+  dropTimeInSeconds: 0.25
   stepAmountInSeconds: 0.01
 --- !u!82 &339964882679441849
 AudioSource:
