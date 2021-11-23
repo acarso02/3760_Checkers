@@ -147,6 +147,7 @@ public static class Board {
 
         // Checks to see if piece wants to move backwords *Note: Will allow king piece to move backward
         } else if((((p.myColour).ToString() == "red" && atRow > toRow) || ((p.myColour).ToString() == "black" && atRow < toRow)) && p.isKing == false) {
+            Debug.Log("backwards move detected");
             return false;
         }
         // Check for sideways movement
@@ -176,41 +177,71 @@ public static class Board {
         Piece p = GetPiece(atRow, atCol);
 
         //Check the red move more than 1 space for a capture
-        if ((toRow - atRow > 1 && (p.myColour).ToString() == "red") && (toRow - atRow < 3))
+        if (Math.Abs(toRow - atRow) > 1 && (p.myColour).ToString() == "red" && (Math.Abs(toRow - atRow) < 3))
         {
-
-            if ((atCol > toCol) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
+            //forward left
+            if ((atCol > toCol) && (toRow > atRow) && (GetPieceColour(atRow + 1, atCol - 1) == "black"))
             {
-                //RemovePiece(atRow + 1, atCol - 1);
                 return GetPiece(atRow + 1, atCol - 1);
             }
-            else if ((atCol < toCol) && (GetPieceColour(atRow + 1, atCol + 1) == "black"))
+            //forward right
+            else if ((atCol < toCol) && (toRow > atRow) && (GetPieceColour(atRow + 1, atCol + 1) == "black"))
             {
-                //RemovePiece(atRow + 1, atCol + 1);
                 return GetPiece(atRow + 1, atCol + 1);
             }
+            //back right
+            else if (p.isKing) 
+            {
+                if ((atCol < toCol) && (toRow < atRow) && (GetPieceColour(atRow - 1, atCol + 1) == "black"))
+                {
+                    return GetPiece(atRow - 1, atCol + 1);
+                }
+                //back left
+                else if ((atCol > toCol) && (toRow < atRow) && (GetPieceColour(atRow - 1, atCol - 1) == "black"))
+                {
+                    return GetPiece(atRow - 1, atCol - 1);
+                }
+                else
+                    return null;
+            }
+
             else
                 return null;
         }
         //Check the black move more than 1 space for a capture
-        else if ((toRow - atRow < -1 && (p.myColour).ToString() == "black") && (toRow - atRow > -3))
+        else if (Math.Abs(toRow - atRow) > 1 && (p.myColour).ToString() == "black" && (Math.Abs(toRow - atRow) < 3))
         {
-
-            if ((atCol < toCol) && (GetPieceColour(atRow - 1, atCol + 1) == "red"))
+            //forward left
+            if ((atCol < toCol) && (toRow < atRow) && (GetPieceColour(atRow - 1, atCol + 1) == "red"))
             {
-                //RemovePiece(atRow - 1, atCol + 1);
                 return GetPiece(atRow - 1, atCol + 1);
             }
-            else if ((atCol > toCol) && (GetPieceColour(atRow - 1, atCol - 1) == "red"))
+            //forward right
+            else if ((atCol > toCol) && (toRow < atRow) && (GetPieceColour(atRow - 1, atCol - 1) == "red"))
             {
-                //RemovePiece(atRow - 1, atCol - 1);
                 return GetPiece(atRow - 1, atCol - 1);
+            }
+            
+            else if (p.isKing)
+            {
+                //back right
+                if ((atCol > toCol) && (toRow > atRow) && (GetPieceColour(atRow + 1, atCol - 1) == "red"))
+                {
+                    return GetPiece(atRow + 1, atCol - 1);
+                }
+                //back left
+                else if ((atCol < toCol) && (toRow > atRow) && (GetPieceColour(atRow + 1, atCol + 1) == "red"))
+                {
+                    return GetPiece(atRow + 1, atCol + 1);
+                }
+                else
+                    return null;
             }
             else
                 return null;
         }
-
-        else{
+        else
+        {
             return null;
         }
     }
