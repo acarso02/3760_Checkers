@@ -15,7 +15,7 @@ public class StartButton : MonoBehaviour
         yield return new WaitForSeconds(startGameDelayInSeconds);
         //Set teams, probably by assigning a static variable?
         //Or should this happen when the game scene loads in? Bring it up next meeting
-        SceneManager.LoadScene("Scenes/GameBoard");
+        SceneManager.LoadScene("Scenes/PlayerStats");
     }
 
 
