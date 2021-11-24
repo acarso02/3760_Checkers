@@ -47,6 +47,10 @@ public class Piece{
             return false;
         }
     }
+    
+    // Flag = false if a piece is able to move freely
+    // Flag = true if a piece has done a capture in its turn and would like to continue to capture other pieces.
+    public bool flag = false;
 }
 
 
@@ -95,6 +99,10 @@ public static class Board {
         }
     }
 
+    public static List<Piece> GetPieceList() {
+        return boardModel;
+    }
+
     //Deletes every Piece in boardModel
     public static void ClearBoard() {
         boardModel.Clear();
@@ -110,14 +118,20 @@ public static class Board {
         bool moveIsLegal = IsLegal(atRow,atCol,toRow,toCol);
         Piece toRemove = IsCapture(atRow, atCol, toRow, toCol);
 
-        // Debug.Log("piece to move exists? " + boardModel.Exists(atPiece => atPiece.row == atRow && atPiece.col == atCol));
-        // Debug.Log("space to move to is empty? " + !boardModel.Exists(toPiece => toPiece.row == toRow && toPiece.col == toCol));
-
         if (moveIsLegal) {
             Piece toMove = GetPiece(atRow, atCol);
+
+            // Checks to see if there is currently a hotpiece selected to prevent other pieces from moving in the same turn
+            foreach (Piece pieces in GetPieceList()) {
+                if(toMove.flag == false && pieces.flag == true) {
+                    return false;
+                }
+            }
+
             toMove.row = toRow;
             toMove.col = toCol;
             if(toRemove != null){
+                toMove.flag = true;
                 boardModel.Remove(toRemove);
                 PieceDestroyer.DestroyPiece(toRemove);
                 return true;
@@ -134,9 +148,7 @@ public static class Board {
     public static bool IsLegal(int atRow, int atCol, int toRow, int toCol) {
         Piece p = GetPiece(atRow,atCol);
 
-        //Debug.Log("AtRow: " + atRow + "toRow " + toRow + "atCol " + atCol + "toCol " + toCol);
 
-        //Debug.Log(p.myColour);
         // Checks if the requested tile to move to is out of bounds of the board array
         if((toRow > 7 || toRow < 0) || (toCol > 7 || toCol < 0)) {
             return false;
@@ -164,7 +176,12 @@ public static class Board {
             else { 
                 return false;
             }
-        }else {
+        }         
+        // Checks to see if a piece has already done a capture, prevents piece that has already done a capture in the same turn to do anything other than another capture
+        else if(p.flag == true) {
+            return false;
+        }
+        else {
             return true;
         }
     }
