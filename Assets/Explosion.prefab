@@ -4979,3 +4979,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6587d7210fef85946bd5171f6fe71d6b, type: 3}
   - {fileID: 8300000, guid: 1a38218ff039d8c4d9ba9201da66dd01, type: 3}
   - {fileID: 8300000, guid: e8a73d69b504bf947ba6ec10bd297289, type: 3}
+  explosionLifeInSeconds: 2
