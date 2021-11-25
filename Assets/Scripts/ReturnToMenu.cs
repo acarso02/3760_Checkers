@@ -14,6 +14,10 @@ public class ReturnToMenu : MonoBehaviour
         }
     }
 
+    public void BackToMenu() {
+        SceneManager.LoadScene("Scenes/Menu");
+    }
+
     //generic scene loader used to reload scene when a player wins
     public void loadScene(string scene) {
         SceneManager.LoadScene(scene);
