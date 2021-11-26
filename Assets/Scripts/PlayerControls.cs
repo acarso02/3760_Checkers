@@ -38,6 +38,8 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             GameObject piece = GetClickedOnPiece();
             if (piece != null) {
+                PieceGameFeel pGF = piece.GetComponent<PieceGameFeel>();
+                pGF.DoPieceJiggle();
                 StartCoroutine(WaitForBoardClick(piece));
             }
         }
@@ -89,6 +91,8 @@ public class PlayerControls : MonoBehaviour
                 if (canMove) {
                     //Move the model to the new location
                     piece.transform.position = hit.collider.gameObject.transform.position + pieceBoardDifference;
+                    PieceGameFeel pGF = piece.GetComponent<PieceGameFeel>();
+                    pGF.DoPieceDrop();
 
                     //check for king move
                     if(mP.isKingMove(atRow, atCol, toRow, toCol) == true)

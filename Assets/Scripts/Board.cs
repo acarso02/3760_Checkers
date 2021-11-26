@@ -58,6 +58,8 @@ public class PieceDestroyer : MonoBehaviour
 {
     public static void DestroyPiece(Piece piece)
     {
+        PieceGameFeel pGF = piece.myPieceGameObject.GetComponent<PieceGameFeel>();
+        pGF.DoPieceExplosion();
         Destroy(piece.myPieceGameObject);
     }
 }
