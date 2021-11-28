@@ -17,7 +17,7 @@ public class SaveLoadData : MonoBehaviour
     public void LoadFromJson()
     {
         string data = System.IO.File.ReadAllText(Application.persistentDataPath + "/PlayerData.json");
-        pList = JsonUtility.FromJson<List>(data);
+        pList = JsonUtility.FromJson<List<PlayerData>>(data);
         Debug.Log(pList);
     }
 

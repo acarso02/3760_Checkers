@@ -6,6 +6,6 @@ using UnityEngine.SceneManagement;
 public class StartButton : MonoBehaviour
 {
     public void PlayerMenu() {
-        SceneManager.LoadScene("Scenes/PlayerStats");
+        SceneManager.LoadScene("Scenes/PlayerSelect");
     }
 }
