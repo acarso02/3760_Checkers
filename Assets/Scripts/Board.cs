@@ -273,14 +273,6 @@ public static class Board {
         //finds all game objects with a "Red Piece" or "Black Piece" tag
         int count = GameObject.FindGameObjectsWithTag(pieceColour + " Piece").Length;
         return count/2; //*note* since pieces consist of both game models and game objects count must be divided by 2
-
-        /*
-        foreach (Piece p in boardModel) { //other method of counting how many total pieces each player has
-            if ((p.myColour).ToString() == pieceColour) {
-                count++;
-            }
-        }
-        return count; */
     }
 
     /*

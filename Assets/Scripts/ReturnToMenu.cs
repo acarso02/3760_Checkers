@@ -7,10 +7,15 @@ using System;
 
 public class ReturnToMenu : MonoBehaviour
 {
+    public GameObject popup;
+
     void Update()
     {
         if (Input.GetButtonDown("Cancel")) {
-            SceneManager.LoadScene("Menu");
+            //SceneManager.LoadScene("Menu");
+            if (popup != null) {
+                popup.SetActive(true);
+            }
         }
     }
 
