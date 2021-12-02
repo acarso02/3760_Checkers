@@ -52,6 +52,7 @@ public class CamSwitch : MonoBehaviour
                     else if (winner == "Black") {
                         blackText.SetActive(true);
                     }
+                    PlayGame.UpdatePlayers(winner);
                     winPopup.SetActive(true); //displays winning popup
                 }
             }
